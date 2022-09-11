@@ -4,6 +4,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "dev:threads": "nodemon threads.js",
+    "dev": "nodemon index-${npm_config_paso}.js",
+    "dev:express": "nodemon ./express/index-${npm_config_paso}.js",
+    "dev:template": "cd ./template-engine && nodemon --inspect index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
