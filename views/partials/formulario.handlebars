@@ -1,4 +1,4 @@
-<form action="/add" method="POST" enctype="multipart/form-data">
+<form action="{{#if club}}/edit/{{club.id}}{{else}}/add{{/if}}" method="POST" enctype="multipart/form-data">
     <div>
         <label for="id">Id<input type="number" placeholder="Id" value="{{club.id}}" id="id" name="id" required></label>
 
@@ -6,7 +6,7 @@
 
        <label for="country">Pais<input type="text" placeholder="Pais" value="{{club.area.name}}" id="country" name="country" required></label>
 
-       <label for="crest">Escudo<input type="file" value="{{club.area.name}}" id="crest" name="crest" required></label>
+       <label for="crest">Escudo<input type="file" value="{{club.crestUrl}}" id="crest" name="crest" required></label>
 
        <label for="venue">Estadio<input type="text" placeholder="estadio" value="{{club.venue}}" id="venue" name="venue" required></label>
 

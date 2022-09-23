@@ -1,9 +1,10 @@
 
   {{#each data.clubes as |club|}}
   <tr></tr>
+    <td><img src="{{crestUrl}}" alt=""/></td>
     <td>{{id}}</td>
     <td>{{name}}</td>
-    <td><button onclick="location.href='club/{{id}}'" type="button">Ver</button><button>Editar</button><button>Borrar</button></td></tr>
+    <td><button onclick="location.href='club/{{id}}'" type="button">Ver</button><button onclick="location.href='edit/{{id}}'">Editar</button><button onclick="location.href='delete/{{id}}'">Borrar</button></td></tr>
   {{/each}}
 
 
