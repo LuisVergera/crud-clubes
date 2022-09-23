@@ -4,3 +4,12 @@ td {
   border: 1px solid;
   margin-right: 10%;
 }
+
+.crest {
+  max-width: 50%;
+  max-height: 50%;
+  width: auto;
+
+  display: block;
+  margin: 0 auto;
+}

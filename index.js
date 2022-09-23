@@ -57,9 +57,6 @@ app.get('/add', (req, res) => {
 app.post('/add', upload.single('crest'), (req, res) => {
   const dataClubes = fs.readFileSync('./data/equipos.json');
   const clubes = JSON.parse(dataClubes);
-  //const idArray = [];
-  //const unusedId = Object.keys(clubes).filter((id))
-
   const nuevoClub = {
     id: parseInt(req.body.id),
     area: {
@@ -119,10 +116,7 @@ app.post('/edit/:id', upload.single('crest'), (req, res) => {
   };
 
   clubes.splice(indexClub, 1, clubActualizado);
-  if (/^\.\.\/uploads\/imagenes/.test(club.crestUrl)) {
-    fs.unlinkSync(club.crestUrl.slice(3));
-    console.log('Image deleted!');
-  }
+
   fs.writeFileSync(`./data/equipos.json`, JSON.stringify(clubes));
   console.log('The file was edited successfully!');
   res.render('edit', {
