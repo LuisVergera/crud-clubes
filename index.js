@@ -2,6 +2,7 @@ const fs = require('fs');
 const express = require('express');
 const multer = require('multer');
 const exphbs = require('express-handlebars');
+const cors = require('cors');
 
 const PUERTO = 8080;
 const app = express();
@@ -24,28 +25,28 @@ let storage = multer.diskStorage({
 const upload = multer({ storage });
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/', (req, res) => {
   const dataClubes = fs.readFileSync('./data/equipos.json');
-  const clubes = JSON.parse(dataClubes);
-  res.render('body', {
-    layout: 'boiler',
-    data: {
-      clubes,
-    },
-  });
+  res.setHeader('Content-Type', 'application/json');
+  try {
+    res.send(dataClubes);
+  } catch {
+    res.status(404).end(error);
+  }
 });
 
 app.get('/club/:id', (req, res) => {
-  const dataClubes = fs.readFileSync('./data/equipos.json');
-  const clubes = JSON.parse(dataClubes);
-  const club = clubes.find((club) => club.id === Number(req.params.id));
-  res.render('club', {
-    layout: 'boiler',
-    data: {
-      club,
-    },
-  });
+  try {
+    const dataClubes = fs.readFileSync('./data/equipos.json');
+    const clubes = JSON.parse(dataClubes);
+    const club = clubes.find((club) => club.id === Number(req.params.id));
+
+    res.send(JSON.stringify(club));
+  } catch {
+    res.status(404).end('Equipo no encontrado');
+  }
 });
 
 app.get('/add', (req, res) => {
@@ -55,29 +56,33 @@ app.get('/add', (req, res) => {
 });
 
 app.post('/add', upload.single('crest'), (req, res) => {
-  const dataClubes = fs.readFileSync('./data/equipos.json');
-  const clubes = JSON.parse(dataClubes);
-  const nuevoClub = {
-    id: parseInt(req.body.id),
-    area: {
-      id: '',
-      name: req.body.country,
-    },
-    name: req.body.name,
-    crestUrl: req.file.filename,
-    address: req.body.address,
-    phone: req.body.phone,
-    founded: req.body.founded,
-    clubColors: req.body.clubColors,
-    venue: req.body.venue,
-    lastUpdated: new Date().toISOString(),
-  };
+  try {
+    const dataClubes = fs.readFileSync('./data/equipos.json');
+    const clubes = JSON.parse(dataClubes);
+    const nuevoClub = {
+      id: parseInt(req.body.id),
+      area: {
+        id: '',
+        name: req.body.country,
+      },
+      name: req.body.name,
+      crestUrl: req.file.filename,
+      address: req.body.address,
+      phone: req.body.phone,
+      founded: req.body.founded,
+      clubColors: req.body.clubColors,
+      venue: req.body.venue,
+      lastUpdated: new Date().toISOString(),
+    };
 
-  clubes.push(nuevoClub);
-  fs.writeFileSync('./data/equipos.json', JSON.stringify(clubes));
-  res.render('add', {
-    layout: 'boiler',
-  });
+    clubes.push(nuevoClub);
+    fs.writeFileSync('./data/equipos.json', JSON.stringify(clubes));
+    res.render('add', {
+      layout: 'boiler',
+    });
+  } catch {
+    res.status(404).end(error);
+  }
 });
 
 app.get('/edit/:id', (req, res) => {
