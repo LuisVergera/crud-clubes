@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 //importar el fetch a la api
 
@@ -38,7 +39,11 @@ function Table() {
               <img src={club.crestUrl} alt="club-crest" />
             </td>
             <td>{club.name}</td>
-            <td></td>
+            <td>
+              <Link to={`club/${club.id}`}>
+                <button type="button">Ver</button>
+              </Link>
+            </td>
           </tr>
         ))}
       </tbody>

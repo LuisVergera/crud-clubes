@@ -8,17 +8,19 @@ import {
 } from 'react-router-dom';
 import Home from './components/pages/Home';
 import Details from './components/pages/Details';
+import NotFound from './components/pages/NotFound';
+import NavBar from './components/NavBar';
 
 function App() {
   return (
     <>
       <Router>
-        <div>
-          <Routes>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/club/:id" element={<Details />}></Route>
-          </Routes>
-        </div>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="club/:id" element={<Details />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
+        </Routes>
       </Router>
     </>
   );
