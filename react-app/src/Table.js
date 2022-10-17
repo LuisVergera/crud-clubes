@@ -34,14 +34,19 @@ function Table() {
         </tr>
         {data.map((club, i) => (
           <tr key={i}>
-            <td>{club.id}</td>
-            <td>
-              <img src={club.crestUrl} alt="club-crest" />
+            <td className="border-solid">{club.id}</td>
+            <td className="border-solid">
+              <img src={club.crestUrl} alt="club-crest" className="w-40 h-40" />
             </td>
-            <td>{club.name}</td>
-            <td>
+            <td className="border-solid">{club.name}</td>
+            <td className="border-solid">
               <Link to={`club/${club.id}`}>
-                <button type="button">Ver</button>
+                <button
+                  type="button"
+                  className="text-white w-10 bg-emerald-500 rounded-md hover:ring-2 ring-emerald-700 shadow-xl shadow-emerald-200"
+                >
+                  Ver
+                </button>
               </Link>
             </td>
           </tr>

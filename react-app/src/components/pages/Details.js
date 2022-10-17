@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import apiClubes from '../../api/fetch-api';
-import './details.css';
 
 const Details = () => {
   const { id } = useParams();
@@ -26,41 +25,50 @@ const Details = () => {
     <>
       <h1>CRUD Clubes</h1>
       <div>
-        <img src={data.crestUrl} alt="" name="crest" />
-        <table>
-          <caption>{data.name}</caption>
+        <img
+          src={data.crestUrl}
+          alt=""
+          name="crest"
+          className="border-spacing-6"
+        />
+        <table className="table-auto">
+          <caption className="text-blue-600">{data.name}</caption>
           <tbody>
             <tr>
-              <td>Fundación</td>
-              <td>{data.founded}</td>
+              <td className="border border-slate-300 ...">Fundación</td>
+              <td className="border border-slate-300 ...">{data.founded}</td>
             </tr>
             <tr>
-              <td>Colores</td>
-              <td>{data.clubColors}</td>
+              <td className="border border-slate-300 ...">Colores</td>
+              <td className="border border-slate-300 ...">{data.clubColors}</td>
             </tr>
             <tr>
-              <td>Sede</td>
-              <td>{data.venue}</td>
+              <td className="border border-slate-300 ...">Sede</td>
+              <td className="border border-slate-300 ...">{data.venue}</td>
             </tr>
             <tr>
-              <td>Dirección</td>
-              <td>{data.address}</td>
+              <td className="border border-slate-300 ...">Dirección</td>
+              <td className="border border-slate-300 ...">{data.address}</td>
             </tr>
             <tr>
-              <td>Telefono</td>
-              <td>{data.phone}</td>
+              <td className="border border-slate-300 ...">Telefono</td>
+              <td className="border border-slate-300 ...">{data.phone}</td>
             </tr>
             <tr>
-              <td>Sitio Web</td>
-              <td>{data.website}</td>
+              <td className="border border-slate-300 ...">Sitio Web</td>
+              <td className="border border-slate-300 ...">{data.website}</td>
             </tr>
             <tr>
-              <td>Email</td>
-              <td>{data.email}</td>
+              <td className="border border-slate-300 ...">Email</td>
+              <td className="border border-slate-300 ...">{data.email}</td>
             </tr>
             <tr>
-              <td>Actualizado por ultima vez</td>
-              <td>{data.lastUpdated}</td>
+              <td className="border border-slate-300 ...">
+                Actualizado por ultima vez
+              </td>
+              <td className="border border-slate-300 ...">
+                {data.lastUpdated}
+              </td>
             </tr>
           </tbody>
         </table>
