@@ -6,8 +6,7 @@ const cors = require('cors');
 const PUERTO = 8080;
 const app = express();
 const path = require('path');
-app.use(express.static(path.join(__dirname, '/uploads/imagenes')));
-app.use(express.static(path.join(__dirname, '/src')));
+const bodyParser = require('body-parser');
 
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -19,11 +18,13 @@ let storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
+//app.use(cors());
+app.use(express.static(path.join(__dirname, '/uploads/imagenes')));
+app.use(express.static(path.join(__dirname, '/src')));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
 
 app.get('/', (req, res) => {
   const dataClubes = fs.readFileSync('./data/equipos.json');
@@ -48,24 +49,35 @@ app.get('/club/:id', (req, res) => {
 });
 
 app.post('/add', upload.single('crest'), (req, res) => {
-  const club = req.body.club;
-  let dataClubes = fs.readFileSync('./data/equipos.json');
-  const clubes = JSON.parse(dataClubes);
+  const dataClubes = fs.readFileSync('./data/equipos.json', {
+    encoding: 'utf-8',
+  });
+  const club = req.body;
+  let clubes = JSON.parse(dataClubes);
+  console.log(req.body);
 
   const nuevoClub = {
-    id: club.id,
-    name: club.title,
-    shortName: club.name,
-    tla: club.tla,
-    crestUrl: club.image,
-    website: club.website,
-    venue: club.stadium,
-    area: { name: club.country },
+    id: Object.keys(clubes).length,
+    name: club.name,
+    venue: club.venue,
+    crestUrl: club.crest,
+    colors: club.colors,
+    address: club.address,
+    phone: club.phone,
+    founded: club.founded,
   };
 
   clubes[nuevoClub.id] = nuevoClub;
-  fs.writeFile('./data/equipos.json', JSON.stringify(clubes));
-  res.status(200);
+  fs.writeFile(
+    './data/equipos.bak.json',
+    JSON.stringify(clubes, null, 4),
+    { encoding: 'utf-8' },
+    () => {
+      fs.rename('./data/equipos.bak.json', './data/equipos.json', () => {
+        res.status(200);
+      });
+    }
+  );
 });
 
 app.get('/edit/:id', (req, res) => {
@@ -114,7 +126,7 @@ app.post('/edit/:id', upload.single('crest'), (req, res) => {
   });
 });
 
-app.get('/delete/:id', (req, res) => {
+app.delete('/delete/:id', (req, res) => {
   const dataClubes = fs.readFileSync('./data/equipos.json');
   const clubes = JSON.parse(dataClubes);
   const club = clubes.find((club) => club.id === Number(req.params.id));
@@ -131,8 +143,8 @@ app.get('/delete/:id', (req, res) => {
 
   fs.writeFileSync(`./data/equipos.json`, JSON.stringify(nuevoArrayClubes));
   console.log('Club deleted successfully!');
-  res.redirect('/');
+  res.send(nuevoArrayClubes);
 });
 
 app.listen(PUERTO);
-console.log(`Escuchando en http://localhost:${PUERTO}`);
+console.log(`Escuchando en el Puerto: ${PUERTO}`);
