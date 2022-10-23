@@ -15,15 +15,17 @@ import Add from './components/pages/Add';
 function App() {
   return (
     <>
-      <Router>
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="club/:id" element={<Details />}></Route>
-          <Route path="/add" element={<Add />}></Route>
-          <Route path="*" element={<NotFound />}></Route>
-        </Routes>
-      </Router>
+      <div>
+        <Router>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="club/:id" element={<Details />}></Route>
+            <Route path="/add" element={<Add />}></Route>
+            <Route path="*" element={<NotFound />}></Route>
+          </Routes>
+        </Router>
+      </div>
     </>
   );
 }

@@ -1,29 +1,16 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './navbar.css';
+import premierLogo from './premier-league-logo.png';
 
 const NavBar = () => {
   return (
     <>
-      <div>
-        <ul>
-          <li>
-            <NavLink
-              className={({ isActive }) => (isActive ? 'active' : 'not-active')}
-              to="/"
-            >
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              className={({ isActive }) => (isActive ? 'active' : 'not-active')}
-              to="club/57"
-            >
-              Prueba
-            </NavLink>
-          </li>
-        </ul>
+      <div className="max-w-36">
+        <NavLink to="/">
+          <img className="max-h-36 max-w-36" alt="logo" src={premierLogo} />
+        </NavLink>
+        <h1>Crud Clubes</h1>
       </div>
     </>
   );

@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
 import handlePost from '../../utilities/handlePost';
+import { useParams } from 'react-router-dom';
 
-function Add() {
+function Edit() {
   const URL = 'http://localhost:8080/add';
-
   const file = useRef();
+
   async function createTeam(body) {
     const response = await fetch(URL, {
       body,
@@ -13,6 +14,7 @@ function Add() {
     const editedTeam = await response.json();
     return editedTeam.data;
   }
+
   const [club, setClub] = useState({
     name: '',
     venue: '',
@@ -140,4 +142,4 @@ function Add() {
   );
 }
 
-export default Add;
+export default Edit;
