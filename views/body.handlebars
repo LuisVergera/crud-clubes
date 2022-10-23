@@ -1,0 +1,18 @@
+<h1>Crud Clubes</h1>
+
+<p>Consulta la información de tus equipos favoritos de Inglaterra o
+  agrega/elimina el equipo que quieras!</p>
+
+<h3>Equipos</h3>
+<button onclick="location.href='add/'" type="button">Añadir equipo</button>
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Escudo</th>
+    <th>Equipo</th>
+    <th>Acción</th>
+  </tr>
+
+    {{>tabla-equipos equipos=data}}
+
+</table>
