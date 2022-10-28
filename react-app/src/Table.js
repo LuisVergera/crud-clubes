@@ -32,6 +32,9 @@ function Table() {
   return (
     <>
       <h2>Listado de equipos</h2>
+      <Link to={"/add"}>
+      <button type="button" className=" bg-teal-300 text-white text-bold rounded-md hover:ring-2 ring-emerald-400 shadow-xl shadow-emerald-200 ">Añadir Club</button>
+      </Link>
       <table className="border-8-solid table-fixed bg-gradient-to-r from-white to-emerald-500 justify-centers">
         <tbody>
           <tr>

@@ -1,21 +1,23 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import handlePost from '../../utilities/handlePost';
 import { useParams } from 'react-router-dom';
 
-function Edit() {
-  const URL = 'http://localhost:8080/add';
+function Edit(clubToEdit) {
+  const { id } = useParams();
+  const URL = `http://localhost:8080/club/${id}`;
   const file = useRef();
 
-  async function createTeam(body) {
+  async function editTeam(body) {
     const response = await fetch(URL, {
       body,
-      method: 'POST',
+      method: 'PUT',
     });
     const editedTeam = await response.json();
     return editedTeam.data;
   }
 
   const [club, setClub] = useState({
+    id: id,
     name: '',
     venue: '',
     colors: '',
@@ -25,6 +27,18 @@ function Edit() {
     country: '',
     founded: '',
   });
+
+  useEffect(() => {
+    setClub((state) => ({
+      ...state,
+      name: clubToEdit.name ? clubToEdit.name : '',
+      tla: clubToEdit.tla ? clubToEdit.tla : '',
+      areaName: clubToEdit.area ? clubToEdit.area.name : '',
+      website: clubToEdit.website ? clubToEdit.website : '',
+      email: clubToEdit.email ? clubToEdit.email : '',
+      uploaded_file: null,
+    }));
+  }, [clubToEdit]);
 
   const onChange = (e) => {
     const newClub = { ...club };
@@ -37,14 +51,14 @@ function Edit() {
   };
 
   const submit = (event) => {
-    handlePost(event, createTeam, club);
+    handlePost(event, editTeam, club);
   };
 
   return (
     <>
       <form
         action="http://localhost:8080/add"
-        method="POST"
+        method="PUT"
         encType="multipart/form-data"
         id="add-club"
         onSubmit={submit}
@@ -52,7 +66,7 @@ function Edit() {
         <label>Nombre</label>
         <input
           type="text"
-          placeholder="Nombre"
+          placeholder={club.name}
           id="name"
           name="name"
           value={club.name}

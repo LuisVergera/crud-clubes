@@ -1,16 +1,17 @@
-const BASE_URL = 'http://localhost:8080/';
+const { id } = useParams();
+const [data, getData] = useState([]);
 
-const fetchApi = async (resourceUrl) => {
-  const response = await fetch(resourceUrl);
+const URL = `http://localhost:8080/club/${id}`;
+const fetchApi = () => {
+  fetch(URL)
+    .then((res) => res.json())
 
-  if (!response.ok) {
-    throw new Error('API Error');
-  }
-  return response.json();
+    .then((response) => {
+      console.log(response);
+      getData(response);
+    });
 };
 
-const apiClubes = {
-  searchClubById: (id) => fetchApi(`${BASE_URL}club/${id}`),
-};
-
-export default apiClubes;
+useEffect(() => {
+  fetchApi();
+}, []);

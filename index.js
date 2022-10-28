@@ -75,25 +75,9 @@ app.post('/add', upload.single('crest'), (req, res) => {
   res.send(clubes);
 });
 
-/*app.post('/add', upload.single('crest'), (req, res) => {
-  res.send(`http://localhost:8080/imagenes/${req.file.filename}`);
-});*/
-
-app.get('/edit/:id', (req, res) => {
+app.put('/club/:id', upload.single('crest'), (req, res) => {
   const dataClubes = fs.readFileSync('./data/equipos.json');
   const clubes = JSON.parse(dataClubes);
-  const club = clubes.find((club) => club.id === Number(req.params.id));
-
-  res.render('edit', {
-    layout: 'boiler',
-    club,
-  });
-});
-
-app.post('/edit/:id', upload.single('crest'), (req, res) => {
-  const dataClubes = fs.readFileSync('./data/equipos.json');
-  const clubes = JSON.parse(dataClubes);
-  const club = clubes.find((club) => club.id === Number(req.params.id));
   const indexClub = clubes.findIndex(
     (club) => club.id === Number(req.params.id)
   );
@@ -118,11 +102,7 @@ app.post('/edit/:id', upload.single('crest'), (req, res) => {
 
   fs.writeFileSync(`./data/equipos.json`, JSON.stringify(clubes));
   console.log('The file was edited successfully!');
-  res.render('edit', {
-    layout: 'boiler',
-    message: 'The club was edited successfully',
-    club,
-  });
+  res.send(clubes);
 });
 
 app.delete('/delete/:id', (req, res) => {

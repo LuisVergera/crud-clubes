@@ -8,6 +8,7 @@ const Home = () => {
         Una app en la cual podes consultar info de los clubes, editarlos,
         eliminarlos o crear tu propio club!
       </p>
+      
       <Table />
     </>
   );

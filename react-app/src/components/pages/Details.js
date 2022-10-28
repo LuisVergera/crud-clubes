@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
-import apiClubes from '../../api/fetch-api';
 
 const Details = () => {
   const { id } = useParams();
@@ -25,12 +24,7 @@ const Details = () => {
     <>
       <h1>CRUD Clubes</h1>
       <div>
-        <img
-          src={data.crestUrl}
-          alt=""
-          name="crest"
-          className="border-spacing-6"
-        />
+        <img src={data.crestUrl} alt="" name="crest" className="" />
         <table className="table-auto">
           <caption className="text-blue-600">{data.name}</caption>
           <tbody>
